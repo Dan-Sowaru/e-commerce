@@ -18,6 +18,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -98,6 +99,22 @@ public class ProdutoService {
         return produtoRepository.save(produtoEntity);
     }
 
+
+    public ProdutoEntity alterar(String codigoBarra, ProdutoRequest produtoRequest) {
+        ProdutoEntity produto = buscarPorCodigoBarra(codigoBarra);
+        produto.setNome(produtoRequest.getNome());
+        produto.setDescricao(produtoRequest.getDescricao());
+        produto.setValor(produtoRequest.getValor());
+        produto.setPeso(produtoRequest.getPeso());
+        produto.setDataAtualizacao(ZonedDateTime.now());
+
+        return produtoRepository.save(produto);
+    }
+
+    public void deletarProduto(String codigoBarra) {
+        ProdutoEntity produto = buscarPorCodigoBarra(codigoBarra);
+        produtoRepository.delete(produto);
+    }
 //    public ProdutoEntity atualizar(Long id, ProdutoRequest produtoRequest){
 //
 //        Optional<ProdutoEntity> optProdutoEntity = produtoRepository.findById(id);
