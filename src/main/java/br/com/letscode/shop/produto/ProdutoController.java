@@ -43,6 +43,15 @@ public class ProdutoController {
         return ResponseEntity.created(null).body(produto);
     }
 
+    @PostMapping("/codigo/{codigoBarra}")
+    public ResponseEntity<ProdutoEntity> changeProduct(
+            @PathVariable(name = "codigoBarra") String codigoBarra,
+            @RequestBody ProdutoRequest produtoRequest){
+                ProdutoEntity produtoAlterado = produtoService.alterar(codigoBarra,produtoRequest);
+                return ResponseEntity.ok(produtoAlterado);
+    }
+
+
     @GetMapping("/codigo/{codigoBarra}")
     public ResponseEntity<ProdutoEntity> getByCodigoBarra(
             @PathVariable(name = "codigoBarra") String codigoBarra){
